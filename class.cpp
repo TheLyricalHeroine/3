@@ -65,7 +65,7 @@ double CVector::operator* (const CVector& other) //можно прописать
 	
 	auto end = chrono::system_clock::now();
 	int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
-        cout << "work time of operator* is : " << (double) (time2 - time1)<<" ms" << endl;
+        cout << "work time of operator* is : " << (double) (end - start)<<" ms" << endl;
 	return result;
 }
 
