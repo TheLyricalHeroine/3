@@ -44,8 +44,9 @@ CVector::CVector(const CVector& other)
 
 double CVector::operator* (const CVector& other) //можно прописать здесь
 {
-	time_t time1, time2;
-    time(&time1);
+	
+	//time_t time1, time2;
+   // time(&time1);
 	double result = 0;
 	if (len != other.len)
 	{
@@ -53,14 +54,18 @@ double CVector::operator* (const CVector& other) //можно прописать
 	}
 	else
 	{
+		auto start = chrono::system_clock::now();
 #pragma omp parallel for
 		for (int i = 0; i < len; i++)
 		{
 			result += v[i]*(double(other.v[i]));
 		}
 	}
-	time(&time2);
-    cout << "work time of operator* is : " << (double) (time2 - time1)<<" ms" << endl;
+	//time(&time2);
+	
+	auto end = chrono::system_clock::now();
+	int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
+        cout << "work time of operator* is : " << (double) (time2 - time1)<<" ms" << endl;
 	return result;
 }
 
