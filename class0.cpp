@@ -5,7 +5,7 @@ CVector0::CVector0() = default;
 
 CVector0::CVector0(vector<double> v1, int len1, string FileName1):CVector(v1,len1,FileName1){}
 CVector0::CVector0(int len2):CVector(len2){}
-CVector0::CVector0(const CVector0& other):CVector(other){}
+CVector0::CVector0(const CVector& other):CVector(other){}
 
 void CVector0::output()
 {
