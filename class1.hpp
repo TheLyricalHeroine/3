@@ -4,7 +4,7 @@ class CVector1 : public CVector {
 	CVector1();
 	CVector1(vector<double> v1, int len1, string FileName1);
 	CVector1(int len2);
-	CVector1(const CVector1& other);
+	CVector1(const CVector& other);
 	
 	using CVector::operator=;
 	
