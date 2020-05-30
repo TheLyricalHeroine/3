@@ -71,8 +71,8 @@ vector<CVector*> ReadFile()
 
 CVector0 operator+(CVector& first, CVector& second)
 {
-	time_t time1, time2;
-	time(&time1);
+	//time_t time1, time2;
+	//time(&time1);
 	CVector0 result;
 	result.v = first.v;
 	result.v.reserve(first.len);
@@ -83,6 +83,7 @@ CVector0 operator+(CVector& first, CVector& second)
 	
 	else
 	{
+		auto start = chrono::system_clock::now();
 #pragma omp parallel for
 		for (int i = 0; i < first.len; i++)
 		{
@@ -91,16 +92,22 @@ CVector0 operator+(CVector& first, CVector& second)
 		
 		result.len = first.len;
 		result.FileName = first.FileName;
+		
+		auto end = chrono::system_clock::now();
+		int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
+		cout << "Operator + time is " << elapsed_ms << " ms" << endl;
 	}
-	time(&time2);
-	cout<<"work time of operator+ is "<<(double) (time2-time1)<<" ms"<<endl;
+	
+	
+	//time(&time2);
+	//cout<<"work time of operator+ is "<<(double) (time2-time1)<<" ms"<<endl;
 	return result;
 }
 
 CVector0 operator-(CVector& first, CVector& second)
 {
-	time_t time1, time2;
-	time(&time1);
+	//time_t time1, time2;
+	//time(&time1);
 	CVector0 result;
 	result.v = first.v;
 	result.v.reserve(first.len);
@@ -112,6 +119,7 @@ CVector0 operator-(CVector& first, CVector& second)
 	
 	else
 	{
+		auto start = chrono::system_clock::now();
 #pragma omp parallel for
 		for (int i = 0; i < first.len; i++)
 		{
@@ -120,9 +128,17 @@ CVector0 operator-(CVector& first, CVector& second)
 		
 		result.len = first.len;
 		result.FileName = first.FileName;
+		
+		auto end = chrono::system_clock::now();
+		int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
+		cout << "Operator + time is " << elapsed_ms << " ms" << endl;
+		
+		
 	}
-	time(&time2);
-	cout<<"work time of operator- is "<<(double) (time2-time1)<<" ms"<<endl;
+	
+	
+	//time(&time2);
+	//cout<<"work time of operator- is "<<(double) (time2-time1)<<" ms"<<endl;
 	return result;
 }
 
@@ -280,16 +296,17 @@ void OpenMPTest()
 	cout<<"OpenMPTest"<<endl;
 	
 	string FileName = "test.txt";
-	vector<double> a1;
-	vector<double> b1;
-	for (int i = 0; i < 20000000; i++)
+	const size_t siz = 40000000;
+	vector<double> a1(siz,1.1);
+	vector<double> b1(siz,1.1);
+	/*for (int i = 0; i < 20000000; i++)
 	{
 		a1.push_back(1.1);
 		b1.push_back(1.1);
-	}
+	}*/
 	
-	CVector0 a(a1, 20000000, FileName);
-	CVector1 b(b1, 20000000, FileName);
+	CVector0 a(a1, siz, FileName);
+	CVector1 b(b1, siz, FileName);
 	CVector0 c;
 	
 	c = a + b;

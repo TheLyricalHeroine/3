@@ -44,9 +44,7 @@ CVector::CVector(const CVector& other)
 
 double CVector::operator* (const CVector& other) //можно прописать здесь
 {
-	
-	//time_t time1, time2;
-   // time(&time1);
+
 	double result = 0;
 	if (len != other.len)
 	{
@@ -60,12 +58,13 @@ double CVector::operator* (const CVector& other) //можно прописать
 		{
 			result += v[i]*(double(other.v[i]));
 		}
+		auto end = chrono::system_clock::now();
+		int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
+		cout << "Operator * time is " << elapsed_ms << " ms" << endl;
 	}
-	//time(&time2);
 	
-	auto end = chrono::system_clock::now();
-	int elapsed_ms = static_cast<int>(chrono::duration_cast<chrono::milliseconds>(end - start).count());
-        cout << "work time of operator* is : " << (double) (end - start)<<" ms" << endl;
+	
+   // cout << "work time of operator* is : " << (double) (time2 - time1)<<" ms" << endl;
 	return result;
 }
 
